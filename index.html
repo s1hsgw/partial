@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partial Switch Mode</title>
+    <script src="js/prefixfree.min.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/modernizr-2.7.1-csstransforms3d-canvas-touch.js"></script>
+    <script src="js/megapix-image.js"></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/Detector.js"></script>
+    <script src="js/CSS3DRenderer.js"></script>
+    <script src="js/theta-viewer.js"></script>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <svg id="svgout" class="svgout">
+        <clippath id="theSVGPath">
+            <circle id="clip" cx="50%" cy="50%" r="180px" />
+        </clippath>
+        <circle class="frame" stroke="#000000" stroke-width="50" fill="transparent" cx="50%" cy="50%" r="205px" />
+    </svg>
+    <div class="viewer-container">
+        <div id="main-viewer" class="layer"></div>
+        <div id="clone-viewer" class="layer layer2"></div>
+    </div>
+    <script>
+    (function($) {
+
+        var myPromise = $.when($('#main-viewer').createMainThetaViewer('images/experiment/R0010128.JPG'));
+
+
+        myPromise.done(function() {
+            $('#clone-viewer').createCloneThetaViewer('images/experiment/R0010128_retouched.JPG');
+        });
+
+        //通常モードに戻るボタン
+        $('html').on("keydown", function(event) {
+            if (event.which == 32) {
+                $('#clone-viewer').toggle();
+                $('.frame').toggle();
+
+            }
+
+            if ($('.frame').css('display') == 'inline') {
+                $('.svgout').css('z-index', 2);
+            } else if ($('.frame').css('display') == 'none') {
+                $('.svgout').css('z-index', 0);
+            }
+        });
+
+        $('html').on("keydown", function(event) {
+
+            var radius = parseInt($('.frame').attr('r'));
+            var cx = $('#clip').attr('cx');
+            var cy = $('#clip').attr('cy');
+
+            if ($('.frame').css('display') == 'inline' && event.which == 38) {
+
+
+                if (radius * 3.0 < window.innerHeight) {
+
+                    radius += 5;
+
+                }
+
+            } else if ($('.frame').css('display') == 'inline' && event.which == 40) {
+
+                if (radius > 100) {
+                    radius -= 5;
+                }
+
+            }
+
+            $('.frame').attr('r', radius);
+            $('#clip').attr('r', radius);
+
+            $('#clone-viewer').css({
+                '-webkit-clip-path': 'circle(' + radius + 'px at ' + cx + ' ' + cy + ')',
+                'clip-path': 'circle(' + radius + 'px at ' + cx + ' ' + cy + ')'
+            });
+
+        });
+
+
+
+
+
+    }(jQuery));
+    </script>
+</body>
+
+</html>
