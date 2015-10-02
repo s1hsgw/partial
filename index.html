@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,13 +16,17 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <svg id="svgout" class="svgout">
         <clippath id="theSVGPath">
-            <circle id="clip" cx="50%" cy="50%" r="180px" />
+            <circle id="clip" cx="50%" cy="50%" r="190px" />
         </clippath>
-        <circle class="frame" stroke="#000000" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="180px" />
-        <circle class="frame" stroke="#eeeeee" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="210px" />
+        <g id="interface">
+            <circle class="frame inner_frame" stroke="#191919" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="190px" />
+            <circle class="frame outer_frame" stroke="#222222" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="210px" />
+            <circle class="frame outer_frame" stroke="#ffffff" stroke-width="1" stroke-dashoffset="25" stroke-dasharray="10,10" fill="transparent" cx="50%" cy="50%" r="190px" />
+        </g>
     </svg>
     <div class="viewer-container">
         <div id="main-viewer" class="layer"></div>
@@ -38,9 +43,10 @@
 
         //通常モードに戻るボタン
         $('html').on("keydown", function(event) {
-            if (event.which == 32) {
+
+            if (event.which == 32) { //スペースバーが押された時
                 $('#clone-viewer').toggle();
-                $('.frame').toggle();
+                $('#interface').toggle();
 
             }
 
@@ -74,7 +80,8 @@
 
             }
 
-            $('.frame').attr('r', radius);
+            $('.inner_frame').attr('r', radius);
+            $('.outer_frame').attr('r', radius + 30);
             $('#clip').attr('r', radius);
 
             $('#clone-viewer').css({
