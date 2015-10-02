@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,13 +15,13 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
     <svg id="svgout" class="svgout">
         <clippath id="theSVGPath">
             <circle id="clip" cx="50%" cy="50%" r="180px" />
         </clippath>
-        <circle class="frame" stroke="#000000" stroke-width="50" fill="transparent" cx="50%" cy="50%" r="205px" />
+        <circle class="frame" stroke="#000000" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="180px" />
+        <circle class="frame" stroke="#eeeeee" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="210px" />
     </svg>
     <div class="viewer-container">
         <div id="main-viewer" class="layer"></div>
@@ -32,7 +31,6 @@
     (function($) {
 
         var myPromise = $.when($('#main-viewer').createMainThetaViewer('images/experiment/R0010128.JPG'));
-
 
         myPromise.done(function() {
             $('#clone-viewer').createCloneThetaViewer('images/experiment/R0010128_retouched.JPG');
