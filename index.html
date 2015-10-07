@@ -18,14 +18,25 @@
 </head>
 
 <body>
-    <svg id="svgout" class="svgout">
+    <svg id="svgout" class="svgout" width="100%" height="100%">
         <clippath id="theSVGPath">
-            <circle id="clip" cx="50%" cy="50%" r="190px" />
+            <circle id="clip" cx="50%" cy="50%" r="150px" />
         </clippath>
-        <g id="interface">
-            <circle class="frame inner_frame" stroke="#191919" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="190px" />
-            <circle class="frame outer_frame" stroke="#222222" stroke-width="30" fill="transparent" cx="50%" cy="50%" r="210px" />
-            <circle class="frame outer_frame" stroke="#ffffff" stroke-width="1" stroke-dashoffset="25" stroke-dasharray="10,10" fill="transparent" cx="50%" cy="50%" r="190px" />
+        <!--   <g id="interface" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+            <g sketch:type="MSLayerGroup">
+                <circle id="outer_border" class="frame" stroke="#282828" stroke-width="34" sketch:type="MSShapeGroup" cx="50%" cy="50%" r="173"></circle>
+                <circle id="base" class="frame" stroke="#808080" stroke-width="30" sketch:type="MSShapeGroup" cx="50%" cy="50%" r="168"></circle>
+                <circle id="inner_border2" class="frame" stroke="#292929" stroke-width="1" sketch:type="MSShapeGroup" cx="50%" cy="50%" r="160"></circle>
+                <circle id="inner_border" class="frame" stroke="#292929" stroke-width="2" sketch:type="MSShapeGroup" cx="50%" cy="50%" r="152"></circle>
+            </g>
+        </g> -->
+        <g id="interface" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Frame">
+                <circle id="base" class="frame" stroke="#808080" stroke-width="30" cx="50%" cy="50%" r="168"></circle>
+                <circle id="border1" class="frame" stroke="#292929" stroke-width="4" cx="50%" cy="50%" r="152"></circle>
+                <circle id="border2" class="frame" stroke="#292929" cx="50%" cy="50%" r="159.5"></circle>
+                <circle id="border3" class="frame" stroke="#292929" stroke-width="6" cx="50%" cy="50%" r="183"></circle>
+            </g>
         </g>
     </svg>
     <div class="viewer-container">
@@ -35,11 +46,13 @@
     <script>
     (function($) {
 
-        var myPromise = $.when($('#main-viewer').createMainThetaViewer('images/experiment/R0010128.JPG'));
+        var myPromise = $.when($('#main-viewer').createMainThetaViewer('images/experiment/R0010250.JPG'));
 
         myPromise.done(function() {
-            $('#clone-viewer').createCloneThetaViewer('images/experiment/R0010128_retouched.JPG');
+            $('#clone-viewer').createCloneThetaViewer('images/experiment/R0010256.JPG');
         });
+
+        $('#interface').hide();
 
         //通常モードに戻るボタン
         $('html').on("keydown", function(event) {
@@ -50,46 +63,46 @@
 
             }
 
-            if ($('.frame').css('display') == 'inline') {
+            if ($('#interface').css('display') == 'inline') {
                 $('.svgout').css('z-index', 2);
-            } else if ($('.frame').css('display') == 'none') {
+            } else if ($('#interface').css('display') == 'none') {
                 $('.svgout').css('z-index', 0);
             }
         });
 
-        $('html').on("keydown", function(event) {
+        // $('html').on("keydown", function(event) {
 
-            var radius = parseInt($('.frame').attr('r'));
-            var cx = $('#clip').attr('cx');
-            var cy = $('#clip').attr('cy');
+        //     var radius = parseInt($('#clip').attr('r'));
+        //     var cx = $('#clip').attr('cx');
+        //     var cy = $('#clip').attr('cy');
 
-            if ($('.frame').css('display') == 'inline' && event.which == 38) {
+        //     if ($('#interface').css('display') == 'inline' && event.which == 38) {
 
 
-                if (radius * 3.0 < window.innerHeight) {
+        //         if (radius * 3.0 < window.innerHeight) {
 
-                    radius += 5;
+        //             radius += 5;
 
-                }
+        //         }
 
-            } else if ($('.frame').css('display') == 'inline' && event.which == 40) {
+        //     } else if ($('#interface').css('display') == 'inline' && event.which == 40) {
 
-                if (radius > 100) {
-                    radius -= 5;
-                }
+        //         if (radius > 100) {
+        //             radius -= 5;
+        //         }
 
-            }
+        //     }
 
-            $('.inner_frame').attr('r', radius);
-            $('.outer_frame').attr('r', radius + 30);
-            $('#clip').attr('r', radius);
+        //     $('.inner_frame').attr('r', radius);
+        //     $('.outer_frame').attr('r', radius + 20);
+        //     $('#clip').attr('r', radius);
 
-            $('#clone-viewer').css({
-                '-webkit-clip-path': 'circle(' + radius + 'px at ' + cx + ' ' + cy + ')',
-                'clip-path': 'circle(' + radius + 'px at ' + cx + ' ' + cy + ')'
-            });
+        //     $('#clone-viewer').css({
+        //         '-webkit-clip-path': 'circle(' + radius + 'px at ' + cx + ' ' + cy + ')',
+        //         'clip-path': 'circle(' + radius + 'px at ' + cx + ' ' + cy + ')'
+        //     });
 
-        });
+        // });
 
 
 
@@ -97,6 +110,7 @@
 
     }(jQuery));
     </script>
+    <!-- <script src="js/timetravel.js"></script> -->
 </body>
 
 </html>
