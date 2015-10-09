@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,13 +18,24 @@
 <body>
     <svg id="svgout" class="svgout" width="100%" height="100%">
         <clippath id="theSVGPath">
-            <circle id="clip" cx="50%" cy="50%" r="150" />
+            <circle id="clip" cx="50%" cy="50%" r="0" />
         </clippath>
+
+        <defs>
+            <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+                <feOffset dx="3" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+                <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+                <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+                <feMerge>
+                    <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+        </defs>
         <g id="interface" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <circle id="base" class="frame" stroke="#808080" stroke-width="30" cx="50%" cy="50%" r="168px"></circle>
-            <circle id="border1" class="frame" stroke="#292929" stroke-width="4" cx="50%" cy="50%" r="152px"></circle>
-            <circle id="border2" class="frame" stroke="#292929" cx="50%" cy="50%" r="159.5px"></circle>
-            <circle id="border3" class="frame" stroke="#292929" stroke-width="6" cx="50%" cy="50%" r="183px"></circle>
+            <g stroke="#AAA9A9" filter="url(#filter-1)" stroke-width="0">
+                <circle id="base" class="frame" cx="50%" cy="50%" r="0"></circle>
+            </g>
         </g>
     </svg>
     <div class="viewer-container">

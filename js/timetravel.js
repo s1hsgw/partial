@@ -1,12 +1,11 @@
 (function($) {
 
-    var radius,
-        b1_radius,
-        b2_radius,
-        base_radius,
-        b3_radius,
+    var radius = window.innerWidth * 0.1, //画面横幅の10%がクリップパスの半径
+        frame_radius,
         cx,
         cy,
+        sw,
+        ratio = 0.03,
         running = false; //Time Travelがオンか;
 
     //Time Travel ビューアを起動
@@ -18,9 +17,11 @@
         //Time Travel UIのフレームサイズ変更
         if (running === true) {
 
+            //フレーム関連の変数取得
             radius = parseInt($('#clip').attr('r'));
             cx = parseFloat($('#clip').attr('cx'));
             cy = parseFloat($('#clip').attr('cy'));
+            sw = parseFloat($('#base').attr('stroke-width'));
 
             switch (event.keyCode) {
                 case 38: //フレームを大きくする(Up Arrow)
@@ -30,6 +31,7 @@
                         radius += 5;
 
                         resizeFrame();
+                        resetClipPath();
                     }
 
                     break;
@@ -41,6 +43,7 @@
                         radius -= 5;
 
                         resizeFrame();
+                        resetClipPath();
                     }
 
                     break;
@@ -74,6 +77,9 @@
             $('#clone-viewer').createCloneThetaViewer('images/experiment/R0010256.JPG');
         });
 
+        //フレームのサイズ設定
+        resizeFrame();
+
         //Time travel UIは非表示にしておく
         $('#interface').hide();
     }
@@ -81,17 +87,17 @@
     //フレームのサイズ変更時に呼ばれる関数
     function resizeFrame() {
 
-        b1_radius = radius + 2;
-        b2_radius = radius + 9.5;
-        base_radius = radius + 18;
-        b3_radius = radius + 33;
+        sw = ratio * (radius * 2); //直径の３％が枠の太さになるように設定
+        frame_radius = radius + (sw / 2);
 
         $('#clip').attr('r', radius + 'px');
-        $('#border1').attr('r', b1_radius + 'px');
-        $('#border2').attr('r', b2_radius + 'px');
-        $('#border3').attr('r', b3_radius + 'px');
-        $('#base').attr('r', base_radius + 'px');
+        $('#base').attr('r', frame_radius + 'px');
+        $('#base').attr('stroke-width', sw + 'px');
 
+    }
+
+    //クリップパス再定義
+    function resetClipPath() {
         $('#clone-viewer').css({
             '-webkit-clip-path': 'circle(' + radius + 'px at ' + cx + '% ' + cy + '%)',
             'clip-path': 'circle(' + radius + 'px at ' + cx + '% ' + cy + '%)'
