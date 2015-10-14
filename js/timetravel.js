@@ -71,10 +71,10 @@
     //初期設定関数
     function init() {
         //２つのビューアを順番に起動
-        var myPromise = $.when($('#main-viewer').createMainThetaViewer('images/experiment/R0010250.JPG'));
+        var myPromise = $.when($('#main-viewer').createMainThetaViewer('images/experiment/IMG_3871.JPG'));
 
         myPromise.done(function() {
-            $('#clone-viewer').createCloneThetaViewer('images/experiment/R0010256.JPG');
+            $('#clone-viewer').createCloneThetaViewer('images/experiment/IMG_3872.JPG');
         });
 
         //フレームのサイズ設定
