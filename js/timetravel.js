@@ -74,7 +74,7 @@
         var myPromise = $.when($('#main-viewer').createMainThetaViewer('images/experiment/present.jpg'));
 
         myPromise.done(function() {
-            $('#clone-viewer').createCloneThetaViewer('images/experiment/past.jpg');
+            $('#clone-viewer').createCloneThetaViewer('images/experiment/hakubishin_test.png');
         });
 
         //フレームのサイズ設定
