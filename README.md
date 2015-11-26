@@ -1,6 +1,6 @@
 #Partial 
 
-**DEMO**: http://shunichi-hasegawa.github.io/partial/
+**DEMO**: http://s1hsgw.github.io/partial/
 
 ### How to Use
 
