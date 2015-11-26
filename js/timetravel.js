@@ -1,20 +1,23 @@
 (function($) {
 
     var radius = window.innerWidth * 0.1, //画面横幅の10%がクリップパスの半径
-        frame_radius,
+        frameRadius,
         cx,
         cy,
         sw,
         ratio = 0.03,
         running = false; //Time Travelがオンか;
 
-    //Time Travel ビューアを起動
+    //Time Travel Viewerを起動
     init();
 
-    //各種機能についての処理（キーボード操作）
-    $('html').on("keydown", function(event) {
+    //イベントハンドラの設定
+    document.onkeydown = updateView;
+    document.oncontextmenu = switchView;
 
-        //Time Travel UIのフレームサイズ変更
+    //Time Travel UIのビジュアル変更
+    function updateView(event) {
+
         if (running === true) {
 
             //フレーム関連の変数取得
@@ -51,22 +54,22 @@
 
         }
 
-        //Time Travel UIの起動・終了
-        if (event.keyCode == '32') { //Space Bar
-            $('#clone-viewer').toggle();
-            $('#interface').toggle();
+    }
 
-            if ($('#interface').css('display') == 'inline') {
-                $('.svgout').css('z-index', 2);
-                running = true;
-            } else if ($('#interface').css('display') == 'none') {
-                $('.svgout').css('z-index', 0);
-                running = false;
-            }
+    //Time Travel Modeのオン・オフ
+    function switchView() {
+        $('#clone-viewer').toggle();
+        $('#interface').toggle();
 
+        if ($('#interface').css('display') == 'inline') {
+            $('.svgout').css('z-index', 2);
+            running = true;
+        } else if ($('#interface').css('display') == 'none') {
+            $('.svgout').css('z-index', 0);
+            running = false;
         }
-
-    });
+        return false;
+    }
 
     //初期設定関数
     function init() {
@@ -88,10 +91,10 @@
     function resizeFrame() {
 
         sw = ratio * (radius * 2); //直径の３％が枠の太さになるように設定
-        frame_radius = radius + (sw / 2);
+        frameRadius = radius + (sw / 2);
 
         $('#clip').attr('r', radius + 'px');
-        $('#base').attr('r', frame_radius + 'px');
+        $('#base').attr('r', frameRadius + 'px');
         $('#base').attr('stroke-width', sw + 'px');
 
     }
