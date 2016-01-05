@@ -8,24 +8,46 @@
   function EventLog() {
     this.title = '';
     this.start = '';
-    this.end = '';
+    this.durationEvent = false;
   }
 
-  EventLog.prototype.startEventLog = function() {
+  EventLog.prototype.eventStart = function() {
     this.start = (new Date(event.timeStamp)).toString();
-  }
 
-  EventLog.prototype.finishEventLog = function(type) {
+    if (!this.durationEvent) {
+      experiment.events.push(this);
+      updateLocalStorage();
+    }
+  };
+
+  EventLog.prototype.eventEnd = function(type) {
     this.title = type;
     this.end = (new Date(event.timeStamp)).toString();
 
     experiment.events.push(this);
 
+    updateLocalStorage();
+
+  };
+
+  function DragEventLog() {
+    EventLog.call(this);
+    this.end = '';
+    this.durationEvent = true;
+  }
+
+  Object.setPrototypeOf(DragEventLog.prototype, EventLog.prototype);
+
+  function updateLocalStorage() {
     localStorage.setItem('experiment', JSON.stringify(experiment));
   }
 
-  var switchLog = new EventLog();
-  var dragLog   = new EventLog();
+  //操作ログイベントのインスタンス生成
+  var modeSwitchLog = new EventLog();
+  var dragLog = new DragEventLog();
+
+
+  /* ----------------------------------------------------------------- */
 
   //elementはHTML内のDOM要素を指す
   //(ここではdiv#theta-viewer)プラグインからthatで渡されている点に注意.
@@ -304,12 +326,10 @@
 
       }
 
-      function onContextMenu(event) {
-        console.log('context: main');
-
-        if (switchLog.start === '') {
-          switchLog.startEventLog();
-        }
+      function onContextMenu() {
+        modeSwitchLog.title = 'timetravel_ON';
+        modeSwitchLog.eventStart();
+        modeSwitchLog = new EventLog();
       }
 
       // イベントハンドラの設定
@@ -490,7 +510,7 @@
       // マウス押し下げ時の処理
       function onMouseDown(event) {
 
-        dragLog.startEventLog();
+        dragLog.eventStart();
 
         var distance;
 
@@ -590,12 +610,12 @@
         if (event.clientX !== onMouseDownX || event.clientY !== onMouseDownY) {
 
           if (isInside && isDragging) {
-            dragLog.finishEventLog('lensDrag');
+            dragLog.eventEnd('lensDrag');
           } else if (isDragging) {
-            dragLog.finishEventLog('viewDrag');
+            dragLog.eventEnd('viewDrag');
           }
 
-          dragLog = new EventLog();
+          dragLog = new DragEventLog();
         }
 
         isDragging = false;
@@ -671,10 +691,10 @@
       }
 
 
-      function onContextMenu(event) {
-        console.log('context: clone');
-        switchLog.finishEventLog('timetravel');
-        switchLog = new EventLog();
+      function onContextMenu() {
+        modeSwitchLog.title = 'timetravel_OFF';
+        modeSwitchLog.eventStart();
+        modeSwitchLog = new EventLog();
       }
 
       // イベントハンドラの設定
