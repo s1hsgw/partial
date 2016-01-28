@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Partial Switch Mode</title>
     <script src="js/prefixfree.min.js"></script>
-    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/modernizr-2.7.1-csstransforms3d-canvas-touch.js"></script>
     <script src="js/megapix-image.js"></script>
     <script src="js/three.min.js"></script>
@@ -13,8 +15,10 @@
     <script src="js/CSS3DRenderer.js"></script>
     <script src="js/theta-viewer.js"></script>
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <svg id="svgout" class="svgout" width="100%" height="100%">
         <clippath id="theSVGPath">
@@ -38,10 +42,67 @@
             </g>
         </g>
     </svg>
+
     <div class="viewer-container">
+
+
+        <!-- Button trigger modal -->
+<!--
+        <button id="helpButton" type="button" class="btn btn-info btn-md helpButton" data-toggle="modal" data-target="#myModal">
+            ?
+        </button>
+-->
+
         <div id="main-viewer" class="layer"></div>
         <div id="clone-viewer" class="layer layer2"></div>
     </div>
+
+
+
+    <!-- Modal -->
+<!--
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">操作方法</h4>
+                </div>
+                <div class="modal-body">
+
+                    <h5>基本操作</h5>
+                    <ul class="helpList">
+                        <li class="helpItem">ドラッグ : 注視点の変更</li>
+                        <li class="helpItem">マウスホイール : ズームイン・アウト</li>
+                        <li class="helpItem">右クリック : 通常・比較モードの切り替え</li>
+                    </ul>
+
+                    <h5>比較モード</h5>
+                    <ul class="helpList">
+                        <li class="helpItem">円内でドラッグ : 円の移動</li>
+                        <li class="helpItem">上矢印キー : 円のサイズの拡大</li>
+                        <li class="helpItem">下矢印キー : 円のサイズの縮小</li>
+                    </ul>
+
+                    <h5>その他</h5>
+                    <ul class="helpList">
+                        <li class="helpItem">PrintScreenキー : スクリーンショットの撮影</li>
+                    </ul>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+-->
+
+
     <script src="js/timetravel.js"></script>
 </body>
+
 </html>
